@@ -1,5 +1,5 @@
 //read in json file
-function buildData(sample) {
+function buildMetadata(sample) {
     d3.json("samples.json").then((data) => {
         var metaData = data.metaData;
         //filter for obj with requested sample id
@@ -86,16 +86,16 @@ function init() {
         //build default plots
         var sample1 = sNames[0];
         buildCharts(sample1);
-        buildData(sample1);
+        meta(sample1);
     });
 
 
 }
 
 //get new data each time select different sample
-function changePlot(changedSample) {
+function optionChanged(changedSample) {
     buildCharts(changedSample);
-    buildData(changedSample);
+    meta(changedSample);
 }
 
 //init app
