@@ -14,8 +14,9 @@ function buildMetadata(sample) {
         //append key value pairs to the panel (object.entries) with a for each loop
         Object.entries(result).forEach(([key, value]) => {panel.append("h6").text(`${key}: ${value}`);
         });
-
+        
     });
+    
 }
 
 //build charts
@@ -86,7 +87,7 @@ function init() {
         //build default plots
         var sample1 = sNames[0];
         buildCharts(sample1);
-        meta(sample1);
+        buildMetadata(sample1);
     });
 
 
@@ -95,7 +96,7 @@ function init() {
 //get new data each time select different sample
 function optionChanged(changedSample) {
     buildCharts(changedSample);
-    meta(changedSample);
+    buildMetadata(changedSample);
 }
 
 //init app
