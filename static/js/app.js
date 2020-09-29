@@ -1,6 +1,6 @@
 //read in json file
 function buildData(sample){
-    d3.json("samples.json").then ((data)=>{
+    d3.json("samples.json").then((data)=>{
         var metaData = data.metaData;
         //filter for obj with requested sample id
         var wantedArray = metaData.filter(obj => obj.id == sample);
@@ -13,7 +13,7 @@ function buildData(sample){
 
         //append key value pairs to the panel (object.entries) with a for each loop
         Object.entries(result).forEach(([key,value])=>{
-            panel.append("h4").text(`${key}:${value}`);
+            panel.append("h6").text(`${key}:${value}`);
         });
 
     });
@@ -27,9 +27,9 @@ function buildCharts(sample){
         var otu_ids = result.otu_ids;
         var otu_labels = result.otu_labels;
         var sample_values =result.sample_values;
-
+        var config = {responsive: true}
     //bar chart
-    var yticks = otu_ids.slice(0,10).map( id =>`OTU ${id}`).reverse(); 
+    var yticks = otu_ids.slice(0,10).map(id =>`OTU ${id}`).reverse(); 
     var barData =[{
         y:yticks,
         x:sample_values.slice(0,10).reverse(),
@@ -39,10 +39,11 @@ function buildCharts(sample){
     }];
     var barLayout ={
         title:"Greatest Quanities of Bacteria Cultures Found",
-        margin: {t:50, l:150}
+        margin: {t:50, l:150, r:0}
     }
+    
     //plot bar chart
-    Plotly.newPlot("bar", barData, barLayout)
+    Plotly.newPlot("bar", barData, barLayout, config)
     //bubble chart
     var bubbleData =[{
         
@@ -64,12 +65,12 @@ function buildCharts(sample){
         };
 
     //plot bubble chart with plotly
-    Plotly.newPlot("bubble", bubbleData, bubbleLayout)
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout, config)
     });
 }
 function init(){
     //dropdown selector
-    var selector = d3.selectAll("#selDataset");
+    var selector = d3.select("#selDataset");
     //dropdown options
     d3.json("samples.json").then((data)=>{
         var sNames = data.names;
